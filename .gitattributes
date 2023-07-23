@@ -1,0 +1,4 @@
+*.c linguist-detectable=false
+*.h linguist-detectable=false
+
+*.glsl linguist-language=GLSL
