@@ -7,8 +7,11 @@ project(minecraft)
 set(
   SOURCES
   src/main.cpp
-  src/Application.cpp
-  src/Window.cpp
+  src/Application/Application.cpp
+  src/Window/Window.cpp
+  src/Model/Model.cpp
+  src/ModelRenderer/ModelRenderer.cpp
+  src/Renderer/Renderer.cpp
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")  # force .exe to build/bin
@@ -16,7 +19,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")  # force .exe to b
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC lib/include)
-target_include_directories(${PROJECT_NAME} PUBLIC src/include)
+target_include_directories(${PROJECT_NAME} PUBLIC src)
 
 find_library(
   GLFW_LIB

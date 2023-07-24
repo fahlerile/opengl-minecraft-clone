@@ -1,13 +1,15 @@
 #include <iostream>
 #include <GLFW/glfw3.h>
-#include "Application.hpp"
+#include "Window/Window.hpp"
+#include "Application/Application.hpp"
 
 void initialize_glfw();
 
 int main()
 {
     initialize_glfw();
-    Application app;
+    Window window(800, 600, "hello");
+    Application app(&window);
     app.start_loop();
     return 0;
 }
