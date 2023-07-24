@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <filesystem>
 
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -16,10 +17,10 @@ Application::Application(Window* window) : renderer()
     // TODO: delete this somewhere
     ModelRenderer *plane = new ModelRenderer(
         {
-            -1.0f,  1.0f,  0.0f,   0.0f, 1.0f,
-             1.0f,  1.0f,  0.0f,   1.0f, 1.0f,
-            -1.0f, -1.0f,  0.0f,   0.0f, 0.0f,
-             1.0f, -1.0f,  0.0f,   1.0f, 0.0f,
+            -0.5f,  0.5f,  0.0f,   0.0f, 1.0f,
+             0.5f,  0.5f,  0.0f,   1.0f, 1.0f,
+            -0.5f, -0.5f,  0.0f,   0.0f, 0.0f,
+             0.5f, -0.5f,  0.0f,   1.0f, 0.0f,
         },
         {
             0, 1, 2,
@@ -33,6 +34,7 @@ Application::Application(Window* window) : renderer()
 
 Application::~Application()
 {
+    // delete this->basic_shader;
     this->quit(0);
 }
 
@@ -48,14 +50,16 @@ void Application::initialize_glew()
 
 void Application::load_resources()
 {
-
+    // this->basic_shader = new Shader("D:\\Programming\\Projects\\opengl-minecraft-clone\\res\\shaders\\basic\\vertex.glsl",
+    //                                 "D:\\Programming\\Projects\\opengl-minecraft-clone\\res\\shaders\\basic\\fragment.glsl");
+    // this->basic_shader->use();
 }
 
 void Application::start_loop()
 {
     while (!glfwWindowShouldClose(this->window->get_id()))
     {
-        glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         this->renderer.submit();

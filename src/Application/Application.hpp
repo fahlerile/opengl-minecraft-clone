@@ -1,6 +1,7 @@
 #pragma once
 #include "Window/Window.hpp"
 #include "Renderer/Renderer.hpp"
+#include "Shader/Shader.hpp"
 
 class Application
 {
@@ -16,4 +17,5 @@ private:
 
     Window* window;
     Renderer renderer;
+    Shader* basic_shader;
 };

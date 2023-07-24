@@ -2,9 +2,6 @@
 #include <GL/glew.h>
 #include "ModelRenderer.hpp"
 
-#include <iostream>
-#include <cstdlib>
-
 ModelRenderer::ModelRenderer(const std::vector<float>& data,
                              const std::vector<unsigned int>& indices) :
                              model(data, indices)
@@ -15,6 +12,7 @@ void ModelRenderer::add_position(glm::vec3 position)
     this->positions.push_back(position);
 }
 
+// TODO: ADD SHADER support!!! (i hope i will get to see that rectangle)
 void ModelRenderer::render()
 {
     this->model.bindVAO();
