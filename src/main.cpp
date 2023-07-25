@@ -11,7 +11,7 @@ int main()
     Window window(800, 600, "hello");
     Application app(&window);
     app.start_loop();
-    return 0;
+    glfwTerminate();
 }
 
 void initialize_glfw()

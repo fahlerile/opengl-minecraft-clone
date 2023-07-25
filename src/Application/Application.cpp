@@ -14,7 +14,7 @@ Application::Application(Window* window) : renderer()
     this->initialize_glew();
     this->load_resources();
 
-    this->camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f), 45.0f, 0.01f, this->window);
+    this->camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f), 45.0f, 5.0f, this->window);
 
     // TODO: delete this somewhere
     ModelRenderer *plane = new ModelRenderer(
@@ -42,7 +42,6 @@ Application::Application(Window* window) : renderer()
 Application::~Application()
 {
     delete this->camera;
-    this->quit(0);
 }
 
 void Application::initialize_glew()
