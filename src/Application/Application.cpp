@@ -69,11 +69,18 @@ void Application::start_loop()
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        this->handle_input();
         this->renderer.submit();
 
         glfwSwapBuffers(this->window->get_id());
         glfwPollEvents();
     }
+}
+
+void Application::handle_input()
+{
+    if (glfwGetKey(this->window->get_id(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(this->window->get_id(), GL_TRUE);
 }
 
 void Application::quit(int code)

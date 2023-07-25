@@ -13,6 +13,7 @@ public:
 private:
     void initialize_glew();
     void load_resources();
+    void handle_input();
     void quit(int code);
 
     Window* window;
