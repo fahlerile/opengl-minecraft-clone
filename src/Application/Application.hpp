@@ -18,4 +18,5 @@ private:
     Window* window;
     Renderer renderer;
     Shader* basic_shader;
+    Camera* camera;
 };

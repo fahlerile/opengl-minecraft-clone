@@ -8,24 +8,33 @@
 #include "Application.hpp"
 #include "Window/Window.hpp"
 
+#include <glm/gtx/string_cast.hpp>
+
 Application::Application(Window* window) : renderer()
 {
     this->window = window;
     this->initialize_glew();
     this->load_resources();
 
+    this->camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), 45.0f, this->window);
+
     // TODO: delete this somewhere
     ModelRenderer *plane = new ModelRenderer(
         {
-            -0.5f,  0.5f,  0.0f,   0.0f, 1.0f,
-             0.5f,  0.5f,  0.0f,   1.0f, 1.0f,
-            -0.5f, -0.5f,  0.0f,   0.0f, 0.0f,
-             0.5f, -0.5f,  0.0f,   1.0f, 0.0f,
+            -1.0f,  1.0f,  0.0f,   0.0f, 1.0f,
+             1.0f,  1.0f,  0.0f,   1.0f, 1.0f,
+            -1.0f, -1.0f,  0.0f,   0.0f, 0.0f,
+             1.0f, -1.0f,  0.0f,   1.0f, 0.0f,
         },
         {
             0, 1, 2,
             1, 2, 3
-        }
+        },
+
+        "D:\\Programming\\Projects\\opengl-minecraft-clone\\res\\shaders\\basic\\vertex.glsl",
+        "D:\\Programming\\Projects\\opengl-minecraft-clone\\res\\shaders\\basic\\fragment.glsl",
+
+        camera
     );
     plane->add_position(glm::vec3(0.0f, 0.0f, 0.0f));
 
@@ -34,7 +43,7 @@ Application::Application(Window* window) : renderer()
 
 Application::~Application()
 {
-    // delete this->basic_shader;
+    delete this->camera;
     this->quit(0);
 }
 
@@ -50,9 +59,7 @@ void Application::initialize_glew()
 
 void Application::load_resources()
 {
-    // this->basic_shader = new Shader("D:\\Programming\\Projects\\opengl-minecraft-clone\\res\\shaders\\basic\\vertex.glsl",
-    //                                 "D:\\Programming\\Projects\\opengl-minecraft-clone\\res\\shaders\\basic\\fragment.glsl");
-    // this->basic_shader->use();
+
 }
 
 void Application::start_loop()
