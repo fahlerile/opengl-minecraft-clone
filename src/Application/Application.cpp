@@ -8,15 +8,13 @@
 #include "Application.hpp"
 #include "Window/Window.hpp"
 
-#include <glm/gtx/string_cast.hpp>
-
 Application::Application(Window* window) : renderer()
 {
     this->window = window;
     this->initialize_glew();
     this->load_resources();
 
-    this->camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), 45.0f, this->window);
+    this->camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f), 45.0f, 0.01f, this->window);
 
     // TODO: delete this somewhere
     ModelRenderer *plane = new ModelRenderer(
@@ -64,8 +62,14 @@ void Application::load_resources()
 
 void Application::start_loop()
 {
+    double this_frame_time = 0;
+    double prev_frame_time = 0;
+
     while (!glfwWindowShouldClose(this->window->get_id()))
     {
+        this_frame_time = glfwGetTime();
+        this->delta_time = this_frame_time - prev_frame_time;
+
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -74,6 +78,8 @@ void Application::start_loop()
 
         glfwSwapBuffers(this->window->get_id());
         glfwPollEvents();
+
+        prev_frame_time = this_frame_time;
     }
 }
 
@@ -81,6 +87,15 @@ void Application::handle_input()
 {
     if (glfwGetKey(this->window->get_id(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(this->window->get_id(), GL_TRUE);
+
+    if (glfwGetKey(this->window->get_id(), GLFW_KEY_W) == GLFW_PRESS)
+        this->camera->move(Camera::Direction::forward, this->delta_time);
+    else if (glfwGetKey(this->window->get_id(), GLFW_KEY_S) == GLFW_PRESS)
+        this->camera->move(Camera::Direction::backward, this->delta_time);
+    if (glfwGetKey(this->window->get_id(), GLFW_KEY_A) == GLFW_PRESS)
+        this->camera->move(Camera::Direction::left, this->delta_time);
+    else if (glfwGetKey(this->window->get_id(), GLFW_KEY_D) == GLFW_PRESS)
+        this->camera->move(Camera::Direction::right, this->delta_time);
 }
 
 void Application::quit(int code)

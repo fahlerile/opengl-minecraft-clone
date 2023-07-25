@@ -20,4 +20,5 @@ private:
     Renderer renderer;
     Shader* basic_shader;
     Camera* camera;
+    double delta_time;
 };
