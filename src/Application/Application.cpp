@@ -43,8 +43,8 @@ Application::Application(Window* window) : renderer()
             1, 2, 3
         },
 
-        "D:\\Programming\\Projects\\opengl-minecraft-clone\\res\\shaders\\basic\\vertex.glsl",
-        "D:\\Programming\\Projects\\opengl-minecraft-clone\\res\\shaders\\basic\\fragment.glsl",
+        "../res/shaders/basic/vertex.glsl",
+        "../res/shaders/basic/fragment.glsl",
 
         camera
     );
