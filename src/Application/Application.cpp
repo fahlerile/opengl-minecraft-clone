@@ -15,7 +15,7 @@ Application::Application(Window* window) : renderer()
     this->initialize_glew();
     this->load_resources();
 
-    this->camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f), 45.0f, 5.0f, this->window);
+    this->camera = new Camera(glm::vec3(0.0f, 0.0f, 0.0f), 45.0f, 5.0f, this->window);
 
     glfwSetInputMode(this->window->get_id(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetWindowUserPointer(this->window->get_id(), this->camera);
@@ -39,7 +39,7 @@ Application::Application(Window* window) : renderer()
 
         camera
     );
-    plane->add_position(glm::vec3(0.0f, 0.0f, 0.0f));
+    plane->add_position(glm::vec3(0.0f, 0.0f, -2.0f));
     plane->add_position(glm::vec3(0.0f, 0.0f, 3.0f));
     plane->add_position(glm::vec3(0.0f, 10.0f, 3.0f));
     plane->add_position(glm::vec3(-4.0f, -5.0f, 0.0f));
