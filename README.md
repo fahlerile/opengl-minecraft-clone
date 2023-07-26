@@ -6,7 +6,6 @@
 
 # TODO
 
-- Add up/down camera controls (space/LShift)
 - Add ImGui F3 overlay (FPS, frametime, camera position)
 - Add texture to my plane
 - Render a block

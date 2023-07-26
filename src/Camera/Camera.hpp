@@ -5,7 +5,7 @@
 class Camera
 {
 public:
-    enum Direction {forward, backward, left, right};
+    enum Direction {forward, backward, left, right, up, down};
 
     Camera(glm::vec3 position, float fov, float speed, Window* window);
 
@@ -27,7 +27,7 @@ public:
 private:
     glm::vec3 position;
     glm::vec3 front;
-    static constexpr glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+    static constexpr glm::vec3 up_vec = glm::vec3(0.0f, 1.0f, 0.0f);
 
     glm::mat4 view;
     glm::mat4 projection;

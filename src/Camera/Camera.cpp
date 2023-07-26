@@ -47,11 +47,19 @@ void Camera::move(Direction direction, double delta_time)
             this->update();
             break;
         case left:
-            this->position -= (speed_this_frame * glm::normalize(glm::cross(this->front, this->up)));
+            this->position -= (speed_this_frame * glm::normalize(glm::cross(this->front, this->up_vec)));
             this->update();
             break;
         case right:
-            this->position += (speed_this_frame * glm::normalize(glm::cross(this->front, this->up)));
+            this->position += (speed_this_frame * glm::normalize(glm::cross(this->front, this->up_vec)));
+            this->update();
+            break;
+        case up:
+            this->position += (speed_this_frame * this->up_vec);
+            this->update();
+            break;
+        case down:
+            this->position -= (speed_this_frame * this->up_vec);
             this->update();
             break;
     }

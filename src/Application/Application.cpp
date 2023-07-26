@@ -104,6 +104,10 @@ void Application::handle_input()
         this->camera->move(Camera::Direction::left, this->delta_time);
     else if (glfwGetKey(this->window->get_id(), GLFW_KEY_D) == GLFW_PRESS)
         this->camera->move(Camera::Direction::right, this->delta_time);
+    if (glfwGetKey(this->window->get_id(), GLFW_KEY_SPACE) == GLFW_PRESS)
+        this->camera->move(Camera::Direction::up, this->delta_time);
+    else if (glfwGetKey(this->window->get_id(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+        this->camera->move(Camera::Direction::down, this->delta_time);
 }
 
 void Application::quit(int code)
