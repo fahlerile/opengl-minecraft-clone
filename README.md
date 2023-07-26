@@ -6,7 +6,7 @@
 
 # TODO
 
-- Add ImGui F3 overlay (FPS, frametime, camera position)
+- Add VSync
 - Add texture to my plane
 - Render a block
 - Render a dirt block

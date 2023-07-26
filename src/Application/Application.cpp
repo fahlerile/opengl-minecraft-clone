@@ -1,9 +1,16 @@
 #include <iostream>
 #include <cstdlib>
 #include <filesystem>
+#include <sstream>
 
 #define GLEW_STATIC
 #include <GL/glew.h>
+
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
+
+#include <glm/gtx/string_cast.hpp>
 
 #include "Application.hpp"
 #include "Window/Window.hpp"
@@ -13,12 +20,14 @@ Application::Application(Window* window) : renderer()
 {
     this->window = window;
     this->initialize_glew();
+    this->initialize_imgui();
     this->load_resources();
 
     this->camera = new Camera(glm::vec3(0.0f, 0.0f, 0.0f), 45.0f, 5.0f, this->window);
 
     glfwSetInputMode(this->window->get_id(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    glfwSetWindowUserPointer(this->window->get_id(), this->camera);
+    glfwSetWindowUserPointer(this->window->get_id(), this);
+    glfwSetKeyCallback(this->window->get_id(), keyboard_callback);
     glfwSetCursorPosCallback(this->window->get_id(), cursor_pos_callback);
 
     // TODO: delete this somewhere
@@ -51,6 +60,9 @@ Application::Application(Window* window) : renderer()
 Application::~Application()
 {
     delete this->camera;
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
 }
 
 void Application::initialize_glew()
@@ -61,6 +73,16 @@ void Application::initialize_glew()
         std::cout << "Failed to initialize GLEW" << std::endl;
         this->quit(2);
     }
+}
+
+void Application::initialize_imgui()
+{
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO(); (void) io;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(this->window->get_id(), true);
+    ImGui_ImplOpenGL3_Init("#version 330");
 }
 
 void Application::load_resources()
@@ -78,14 +100,23 @@ void Application::start_loop()
         this_frame_time = glfwGetTime();
         this->delta_time = this_frame_time - prev_frame_time;
 
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        this->renderer.begin();
 
         this->handle_input();
         this->renderer.submit();
 
-        glfwSwapBuffers(this->window->get_id());
-        glfwPollEvents();
+        if (this->show_debug_window)
+        {
+            ImGui::Begin("Debug", nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoInputs);
+            std::stringstream debug_ss;
+            debug_ss << "FPS: " << 1 / this->delta_time << "\n"
+                     << "Frametime: " << this->delta_time * 1000 << "ms\n"
+                     << "Position: " << glm::to_string(this->camera->get_position()) << "\n";
+            ImGui::Text(debug_ss.str().c_str());  // in-built formatting does not work, so using sstream
+            ImGui::End();
+        }
+
+        this->renderer.end(this->window);
 
         prev_frame_time = this_frame_time;
     }
@@ -108,6 +139,16 @@ void Application::handle_input()
         this->camera->move(Camera::Direction::up, this->delta_time);
     else if (glfwGetKey(this->window->get_id(), GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
         this->camera->move(Camera::Direction::down, this->delta_time);
+}
+
+void Application::toggle_debug_window()
+{
+    this->show_debug_window = !(this->show_debug_window);
+}
+
+Camera* Application::get_camera()
+{
+    return this->camera;
 }
 
 void Application::quit(int code)

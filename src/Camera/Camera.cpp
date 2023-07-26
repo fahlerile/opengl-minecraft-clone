@@ -22,6 +22,11 @@ void Camera::update()
     this->projection = glm::perspective(this->fov, (float) width / height, 0.1f, 100.0f);
 }
 
+glm::vec3 Camera::get_position()
+{
+    return this->position;
+}
+
 glm::mat4 Camera::get_view_matrix()
 {
     return this->view;

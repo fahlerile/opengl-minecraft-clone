@@ -1,11 +1,13 @@
 #include "callbacks.hpp"
 #include "Camera/Camera.hpp"
+#include "Application/Application.hpp"
 
 #include <iostream>
 
 void cursor_pos_callback(GLFWwindow* window, double x, double y)
 {
-    Camera* camera = (Camera*) glfwGetWindowUserPointer(window);
+    Application* application = (Application*) glfwGetWindowUserPointer(window);
+    Camera* camera = application->get_camera();
 
     if (camera->first_mouse_input)
     {
@@ -38,4 +40,12 @@ void cursor_pos_callback(GLFWwindow* window, double x, double y)
     };
     camera->set_front(glm::normalize(direction));
     camera->update();
+}
+
+void keyboard_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    Application* application = (Application*) glfwGetWindowUserPointer(window);
+
+    if (key == GLFW_KEY_F3 && action == GLFW_PRESS)
+        application->toggle_debug_window();
 }

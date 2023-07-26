@@ -19,6 +19,7 @@ public:
     double yaw = 270.0;
     double pitch = 0.0;
 
+    glm::vec3 get_position();
     glm::mat4 get_view_matrix();
     glm::mat4 get_projection_matrix();
 

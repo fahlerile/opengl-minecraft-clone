@@ -1,4 +1,8 @@
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_glfw.h>
+#include <imgui/imgui_impl_opengl3.h>
 #include "Renderer.hpp"
+#include "Window/Window.hpp"
 
 void Renderer::add(ModelRenderer *model_renderer)
 {
@@ -11,4 +15,23 @@ void Renderer::submit()
     {
         model_renderer->render();
     }
+}
+
+void Renderer::begin()
+{
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+}
+
+void Renderer::end(Window* window)
+{
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    glfwSwapBuffers(window->get_id());
+    glfwPollEvents();
 }

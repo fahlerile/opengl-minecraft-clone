@@ -44,12 +44,18 @@ if(NOT GLEW_LIB)
   message(FATAL_ERROR "GLEW library not found")
 endif()
 
+file(GLOB IMGUI_SOURCES lib/imgui/*.cpp)
+add_library(imgui STATIC ${IMGUI_SOURCES})
+target_include_directories(imgui PUBLIC lib/include/imgui)
+target_include_directories(imgui PUBLIC lib/include)
+
 target_link_libraries(
   ${PROJECT_NAME}
   ${GLFW_LIB}
   ${GLEW_LIB}
   opengl32
   gdi32
+  imgui
   -static  # dll error if there is no this option (https://stackoverflow.com/questions/69545451/cant-cross-compile-c-files-in-mingw-properly)
 )
 
