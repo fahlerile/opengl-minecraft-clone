@@ -6,7 +6,6 @@
 
 # TODO
 
-- Add VSync
 - Add texture to my plane
 - Render a block
 - Render a dirt block

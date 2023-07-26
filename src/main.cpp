@@ -8,7 +8,7 @@ void initialize_glfw();
 int main()
 {
     initialize_glfw();
-    Window window(800, 600, "hello", false);
+    Window window(1920, 1080, "hello", true);
     Application app(&window);
     app.start_loop();
     glfwTerminate();
