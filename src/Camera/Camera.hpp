@@ -12,8 +12,17 @@ public:
     void update();
     void move(Direction direction, double delta_time);
 
+    bool first_mouse_input = false;
+    double cursor_last_x;
+    double cursor_last_y;
+    float sensitivity = 0.1f;
+    double yaw;
+    double pitch;
+
     glm::mat4 get_view_matrix();
     glm::mat4 get_projection_matrix();
+
+    void set_front(glm::vec3 new_front);
 
 private:
     glm::vec3 position;

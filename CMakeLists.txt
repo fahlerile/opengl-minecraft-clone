@@ -14,6 +14,7 @@ set(
   src/Renderer/Renderer.cpp
   src/Shader/Shader.cpp
   src/Camera/Camera.cpp
+  src/callbacks.cpp
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")  # force .exe to build/bin

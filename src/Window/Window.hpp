@@ -4,7 +4,7 @@
 class Window
 {
 public:
-    Window(unsigned int height, unsigned int width, const char *title);
+    Window(unsigned int height, unsigned int width, const char *title, bool fullscreen);
     GLFWwindow* get_id();
 
 private:

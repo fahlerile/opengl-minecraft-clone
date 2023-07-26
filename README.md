@@ -6,7 +6,6 @@
 
 # TODO
 
-- Add mouse controls (yaw, pitch)
 - Add texture to my plane
 - Render a block
 - Render a dirt block

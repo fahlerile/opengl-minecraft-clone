@@ -56,3 +56,8 @@ void Camera::move(Direction direction, double delta_time)
             break;
     }
 }
+
+void Camera::set_front(glm::vec3 new_front)
+{
+    this->front = new_front;
+}
