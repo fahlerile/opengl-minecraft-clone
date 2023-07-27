@@ -6,8 +6,10 @@
 
 # TODO
 
-- Add `Texture` class
-- Add texture to my plane
 - Render a block
 - Render a dirt block
 - Add destructors to `Texture` and `Shader` classes
+- Add support to draw different textures on different sides of a block
+- `BlockRenderer` class?
+- Render a chunk of blocks
+- Think about optimisation (don't render vertices that are can't be seen by a player right now)
