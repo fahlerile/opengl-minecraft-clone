@@ -39,10 +39,8 @@ Application::Application(Window* window) : renderer()
     Shader *basic_shader = new Shader("../res/shaders/basic/vertex.glsl",
                                       "../res/shaders/basic/fragment.glsl");
 
-    BlockRenderer *block = new BlockRenderer(basic_shader, this->camera);
-    block->add_block(glm::vec3(0.0f, 0.0f, 0.0f), {dirt_texture, dirt_texture, dirt_texture, dirt_texture, stone_texture, stone_texture});
-
-    this->renderer.add(block);
+    this->renderer = new BlockRenderer(basic_shader, this->camera);
+    this->renderer->add_block(glm::vec3(0.0f, 0.0f, 0.0f), {dirt_texture, dirt_texture, dirt_texture, dirt_texture, stone_texture, stone_texture});
 }
 
 // Delete heap allocated resources here, uninitialize libraries
@@ -94,10 +92,10 @@ void Application::start_loop()
         this_frame_time = glfwGetTime();
         this->delta_time = this_frame_time - prev_frame_time;
 
-        this->renderer.begin();
+        this->renderer->begin();
 
         this->handle_input();
-        this->renderer.submit();
+        this->renderer->render();
 
         if (this->show_debug_window)
         {
@@ -110,7 +108,7 @@ void Application::start_loop()
             ImGui::End();
         }
 
-        this->renderer.end(this->window);
+        this->renderer->end(this->window);
 
         prev_frame_time = this_frame_time;
     }

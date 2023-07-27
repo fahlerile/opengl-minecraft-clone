@@ -14,6 +14,8 @@ public:
                   Camera* camera);
     void add_block(glm::vec3 position, std::vector<Texture*> textures);
     void render();
+    void begin();
+    void end(Window* window);
 
 private:
     std::vector<std::pair<glm::vec3, std::vector<Texture*>>> blocks;

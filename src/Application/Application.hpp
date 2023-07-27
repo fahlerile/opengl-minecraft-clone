@@ -1,6 +1,6 @@
 #pragma once
 #include "Window/Window.hpp"
-#include "Renderer/Renderer.hpp"
+#include "BlockRenderer/BlockRenderer.hpp"
 #include "Shader/Shader.hpp"
 
 class Application
@@ -20,7 +20,7 @@ private:
     void quit(int code);
 
     Window* window;
-    Renderer renderer;
+    BlockRenderer* renderer;
     Shader* basic_shader;
     Camera* camera;
     double delta_time;
