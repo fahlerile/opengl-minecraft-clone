@@ -1,4 +1,5 @@
 #include <vector>
+#include <utility>
 
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -12,8 +13,7 @@
 #include "BlockRenderer.hpp"
 
 // `textures` order is {back, front, left, right, top, bottom}
-BlockRenderer::BlockRenderer(std::vector<Texture*> textures,
-                             Shader* shader,
+BlockRenderer::BlockRenderer(Shader* shader,
                              Camera* camera) :
                              model(
                                 {
@@ -74,14 +74,17 @@ BlockRenderer::BlockRenderer(std::vector<Texture*> textures,
                                 }
                              )
 {
-    this->textures = textures;
     this->shader = shader;
     this->camera = camera;
 }
 
-void BlockRenderer::add_position(glm::vec3 position)
+void BlockRenderer::add_block(glm::vec3 position, std::vector<Texture*> textures)
 {
-    this->positions.push_back(position);
+    blocks.push_back(
+        std::pair<glm::vec3, std::vector<Texture*>> {
+            position, textures
+        }
+    );
 }
 
 void BlockRenderer::render()
@@ -95,17 +98,21 @@ void BlockRenderer::render()
     glm::mat4 projection = this->camera->get_projection_matrix();
     glUniformMatrix4fv(this->shader->get_uniform_location("projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-    for (auto position : this->positions)
+    for (auto block : this->blocks)
     {
+        glm::vec3 position = block.first;
+        std::vector<Texture*> textures = block.second;
+
         glm::mat4 model(1.0f);
         model = glm::translate(model, position);
         glUniformMatrix4fv(this->shader->get_uniform_location("model"), 1, GL_FALSE, glm::value_ptr(model));
 
         for (int i = 0; i < 6; i++)
         {
-            this->textures[i]->bind(0);
+            textures[i]->bind(0);
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*) (i * 6 * sizeof(unsigned int)));
         }
-
     }
+
+    // this->blocks.clear();
 }

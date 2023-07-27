@@ -1,5 +1,7 @@
 #pragma once
 #include <vector>
+#include <utility>
+
 #include "Texture/Texture.hpp"
 #include "Shader/Shader.hpp"
 #include "Camera/Camera.hpp"
@@ -8,16 +10,14 @@
 class BlockRenderer
 {
 public:
-    BlockRenderer(std::vector<Texture*> textures,
-                  Shader* shader,
+    BlockRenderer(Shader* shader,
                   Camera* camera);
-    void add_position(glm::vec3 position);
+    void add_block(glm::vec3 position, std::vector<Texture*> textures);
     void render();
 
 private:
-    std::vector<glm::vec3> positions;
+    std::vector<std::pair<glm::vec3, std::vector<Texture*>>> blocks;
     Model model;
-    std::vector<Texture*> textures;
     Shader* shader;
     Camera* camera;
 };

@@ -39,9 +39,8 @@ Application::Application(Window* window) : renderer()
     Shader *basic_shader = new Shader("../res/shaders/basic/vertex.glsl",
                                       "../res/shaders/basic/fragment.glsl");
 
-    BlockRenderer *block = new BlockRenderer({dirt_texture, dirt_texture, dirt_texture, dirt_texture, stone_texture, stone_texture},
-                                             basic_shader, this->camera);
-    block->add_position(glm::vec3(0.0f, 0.0f, 0.0f));
+    BlockRenderer *block = new BlockRenderer(basic_shader, this->camera);
+    block->add_block(glm::vec3(0.0f, 0.0f, 0.0f), {dirt_texture, dirt_texture, dirt_texture, dirt_texture, stone_texture, stone_texture});
 
     this->renderer.add(block);
 }
