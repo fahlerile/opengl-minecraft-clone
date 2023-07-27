@@ -14,6 +14,8 @@
 
 #include "Application.hpp"
 #include "Window/Window.hpp"
+#include "Shader/Shader.hpp"
+#include "Texture/Texture.hpp"
 #include "callbacks.hpp"
 
 Application::Application(Window* window) : renderer()
@@ -31,21 +33,24 @@ Application::Application(Window* window) : renderer()
     glfwSetCursorPosCallback(this->window->get_id(), cursor_pos_callback);
 
     // TODO: delete this somewhere
+    Texture *dirt_texture = new Texture("../res/textures/dirt.jpg");
+    Shader *basic_shader = new Shader("../res/shaders/basic/vertex.glsl",
+                                      "../res/shaders/basic/fragment.glsl");
+
     ModelRenderer *plane = new ModelRenderer(
         {
-            -1.0f,  1.0f,  0.0f,   0.0f, 1.0f,
-             1.0f,  1.0f,  0.0f,   1.0f, 1.0f,
-            -1.0f, -1.0f,  0.0f,   0.0f, 0.0f,
-             1.0f, -1.0f,  0.0f,   1.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,   0.0f, 1.0f,
+            1.0f, 1.0f, 0.0f,   1.0f, 1.0f,
+            0.0f, 0.0f, 0.0f,   0.0f, 0.0f,
+            1.0f, 0.0f, 0.0f,   1.0f, 0.0f
         },
         {
             0, 1, 2,
             1, 2, 3
         },
 
-        "../res/shaders/basic/vertex.glsl",
-        "../res/shaders/basic/fragment.glsl",
-
+        dirt_texture,
+        basic_shader,
         camera
     );
     plane->add_position(glm::vec3(0.0f, 0.0f, -2.0f));
