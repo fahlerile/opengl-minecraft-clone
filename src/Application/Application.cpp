@@ -35,10 +35,12 @@ Application::Application(Window* window) : renderer()
 
     // TODO: delete this somewhere
     Texture *dirt_texture = new Texture("../res/textures/dirt.jpg");
+    Texture *stone_texture = new Texture("../res/textures/stone.jpg");
     Shader *basic_shader = new Shader("../res/shaders/basic/vertex.glsl",
                                       "../res/shaders/basic/fragment.glsl");
 
-    BlockRenderer *block = new BlockRenderer(dirt_texture, basic_shader, this->camera);
+    BlockRenderer *block = new BlockRenderer({dirt_texture, dirt_texture, dirt_texture, dirt_texture, stone_texture, stone_texture},
+                                             basic_shader, this->camera);
     block->add_position(glm::vec3(0.0f, 0.0f, 0.0f));
 
     this->renderer.add(block);

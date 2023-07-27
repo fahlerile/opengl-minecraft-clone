@@ -1,3 +1,5 @@
+#include <vector>
+
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <glm/glm.hpp>
@@ -9,18 +11,19 @@
 #include "Camera/Camera.hpp"
 #include "BlockRenderer.hpp"
 
-BlockRenderer::BlockRenderer(Texture* texture,
+// `textures` order is {back, front, left, right, top, bottom}
+BlockRenderer::BlockRenderer(std::vector<Texture*> textures,
                              Shader* shader,
                              Camera* camera) :
                              model(
                                 {
-                                    // far side
+                                    // back side
                                     1.0f, 1.0f, 0.0f,   1.0f, 1.0f,
                                     0.0f, 1.0f, 0.0f,   0.0f, 1.0f,
                                     1.0f, 0.0f, 0.0f,   1.0f, 0.0f,
                                     0.0f, 0.0f, 0.0f,   0.0f, 0.0f,
 
-                                    // side closer to the camera
+                                    // front side
                                     1.0f, 1.0f, 1.0f,   1.0f, 1.0f,
                                     0.0f, 1.0f, 1.0f,   0.0f, 1.0f,
                                     1.0f, 0.0f, 1.0f,   1.0f, 0.0f,
@@ -71,7 +74,7 @@ BlockRenderer::BlockRenderer(Texture* texture,
                                 }
                              )
 {
-    this->texture = texture;
+    this->textures = textures;
     this->shader = shader;
     this->camera = camera;
 }
@@ -85,7 +88,6 @@ void BlockRenderer::render()
 {
     this->shader->use();
     glUniform1i(this->shader->get_uniform_location("texture_sampler"), 0);
-    this->texture->bind(0);
     this->model.bindVAO();
 
     glm::mat4 view = this->camera->get_view_matrix();
@@ -99,6 +101,11 @@ void BlockRenderer::render()
         model = glm::translate(model, position);
         glUniformMatrix4fv(this->shader->get_uniform_location("model"), 1, GL_FALSE, glm::value_ptr(model));
 
-        glDrawElements(GL_TRIANGLES, this->model.get_indices_count(), GL_UNSIGNED_INT, nullptr);
+        for (int i = 0; i < 6; i++)
+        {
+            this->textures[i]->bind(0);
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*) (i * 6 * sizeof(unsigned int)));
+        }
+
     }
 }
