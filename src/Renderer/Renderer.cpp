@@ -5,7 +5,7 @@
 #include "Window/Window.hpp"
 
 // Add a new model renderer to render
-void Renderer::add(ModelRenderer *model_renderer)
+void Renderer::add(BlockRenderer *model_renderer)
 {
     this->model_renderers.push_back(model_renderer);
 }

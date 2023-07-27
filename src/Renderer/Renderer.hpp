@@ -1,14 +1,14 @@
 #pragma once
 #include <vector>
-#include "ModelRenderer/ModelRenderer.hpp"
+#include "BlockRenderer/BlockRenderer.hpp"
 
 class Renderer
 {
 public:
-    void add(ModelRenderer *model_renderer);
+    void add(BlockRenderer *model_renderer);
     void submit();
     void begin();
     void end(Window* window);
 private:
-    std::vector<ModelRenderer*> model_renderers;
+    std::vector<BlockRenderer*> model_renderers;
 };

@@ -10,7 +10,6 @@ set(
   src/Application/Application.cpp
   src/Window/Window.cpp
   src/Model/Model.cpp
-  src/ModelRenderer/ModelRenderer.cpp
   src/Renderer/Renderer.cpp
   src/Shader/Shader.cpp
   src/Camera/Camera.cpp
