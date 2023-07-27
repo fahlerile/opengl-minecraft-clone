@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <filesystem>
 #include <sstream>
+#include <random>
 
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -98,12 +99,13 @@ void Application::load_resources()
 
     this->renderer = new BlockRenderer(this->shaders["basic"], this->camera);
 
-    for (int y = 0; y <= 5; y++)
+    std::default_random_engine generator;
+    std::uniform_int_distribution<int> binary_distribution(0, 1);
+    std::uniform_int_distribution<int> distribution(0, 20);
+    for (int n = 0; n < 100; n++)
     {
-        for (int x = 0; x < y; x++)
-        {
-            this->renderer->add_block(glm::vec3(x, (float) y, x), this->textures["stone"]);
-        }
+        this->renderer->add_block(glm::vec3(distribution(generator), distribution(generator), distribution(generator)),
+                                  binary_distribution(generator) == 0 ? this->textures["dirt"] : this->textures["stone"]);
     }
 }
 

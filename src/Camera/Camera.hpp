@@ -16,7 +16,7 @@ public:
     double cursor_last_x;
     double cursor_last_y;
     float sensitivity = 0.1f;
-    double yaw = 270.0;
+    double yaw = 0.0;
     double pitch = 0.0;
 
     glm::vec3 get_position();
