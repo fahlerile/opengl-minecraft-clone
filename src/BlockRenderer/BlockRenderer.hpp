@@ -13,6 +13,7 @@ public:
     BlockRenderer(Shader* shader,
                   Camera* camera);
     void add_block(glm::vec3 position, std::vector<Texture*> textures);
+    void add_block(glm::vec3 position, Texture* texture);
     void render();
     void begin();
     void end(Window* window);

@@ -50,4 +50,6 @@ void keyboard_callback(GLFWwindow* window, int key, int scancode, int action, in
 
     if (key == GLFW_KEY_F3 && action == GLFW_PRESS)
         application->toggle_debug_window();
+    else if (key == GLFW_KEY_F2 && action == GLFW_PRESS)
+        application->toggle_wireframe_mode();
 }

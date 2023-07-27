@@ -1,4 +1,7 @@
 #pragma once
+#include <map>
+#include <string>
+
 #include "Window/Window.hpp"
 #include "BlockRenderer/BlockRenderer.hpp"
 #include "Shader/Shader.hpp"
@@ -10,6 +13,7 @@ public:
     ~Application();
     void start_loop();
     void toggle_debug_window();
+    void toggle_wireframe_mode();
     Camera* get_camera();
 
 private:
@@ -23,6 +27,11 @@ private:
     BlockRenderer* renderer;
     Shader* basic_shader;
     Camera* camera;
+
+    std::map<std::string, Texture*> textures;
+    std::map<std::string, Shader*> shaders;
+
     double delta_time;
     bool show_debug_window = false;
+    bool wireframe_mode = false;
 };

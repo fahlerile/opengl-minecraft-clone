@@ -22,31 +22,29 @@
 Application::Application(Window* window) : renderer()
 {
     this->window = window;
+    this->camera = new Camera(glm::vec3(0.0f, 0.0f, 0.0f), 45.0f, 5.0f, this->window);
+
     this->initialize_glew();
     this->initialize_imgui();
     this->load_resources();
-
-    this->camera = new Camera(glm::vec3(0.0f, 0.0f, 0.0f), 45.0f, 5.0f, this->window);
 
     glfwSetInputMode(this->window->get_id(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetWindowUserPointer(this->window->get_id(), this);
     glfwSetKeyCallback(this->window->get_id(), keyboard_callback);
     glfwSetCursorPosCallback(this->window->get_id(), cursor_pos_callback);
-
-    // TODO: delete this somewhere
-    Texture *dirt_texture = new Texture("../res/textures/dirt.jpg");
-    Texture *stone_texture = new Texture("../res/textures/stone.jpg");
-    Shader *basic_shader = new Shader("../res/shaders/basic/vertex.glsl",
-                                      "../res/shaders/basic/fragment.glsl");
-
-    this->renderer = new BlockRenderer(basic_shader, this->camera);
-    this->renderer->add_block(glm::vec3(0.0f, 0.0f, 0.0f), {dirt_texture, dirt_texture, dirt_texture, dirt_texture, stone_texture, stone_texture});
 }
 
 // Delete heap allocated resources here, uninitialize libraries
 Application::~Application()
 {
+    // free heap allocated resources
     delete this->camera;
+    for (auto item : this->textures)
+        delete item.second;
+    for (auto item : this->shaders)
+        delete item.second;
+
+    // deinit libraries
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
@@ -78,7 +76,35 @@ void Application::initialize_imgui()
 // Load necessary resources (e.g textures, sounds, shaders)
 void Application::load_resources()
 {
+    std::filesystem::path textures_path("../res/textures/");
+    for (auto entry : std::filesystem::directory_iterator(textures_path))
+    {
+        std::filesystem::path path = entry.path();
+        std::string filename = path.filename().string();
+        filename = filename.substr(0, filename.find('.'));
 
+        this->textures[filename] = new Texture(path.string());
+    }
+
+    std::filesystem::path shaders_path("../res/shaders/");
+    for (auto entry : std::filesystem::directory_iterator(shaders_path))
+    {
+        std::filesystem::path path = entry.path();
+        std::string filename = path.filename().string();
+
+        this->shaders[filename] = new Shader((path / "vertex.glsl").string(),
+                                             (path / "fragment.glsl").string());
+    }
+
+    this->renderer = new BlockRenderer(this->shaders["basic"], this->camera);
+
+    for (int y = 0; y <= 5; y++)
+    {
+        for (int x = 0; x < y; x++)
+        {
+            this->renderer->add_block(glm::vec3(x, (float) y, x), this->textures["stone"]);
+        }
+    }
 }
 
 // Starts a main application loop
@@ -138,6 +164,21 @@ void Application::handle_input()
 void Application::toggle_debug_window()
 {
     this->show_debug_window = !(this->show_debug_window);
+}
+
+// Toggle wireframe mode. Yes.
+void Application::toggle_wireframe_mode()
+{
+    if (this->wireframe_mode)
+    {
+        this->wireframe_mode = false;
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
+    else
+    {
+        this->wireframe_mode = true;
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
 }
 
 // Get a pointer to camera object

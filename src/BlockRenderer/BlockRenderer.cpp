@@ -91,6 +91,15 @@ void BlockRenderer::add_block(glm::vec3 position, std::vector<Texture*> textures
     );
 }
 
+void BlockRenderer::add_block(glm::vec3 position, Texture* texture)
+{
+    blocks.push_back(
+        std::pair<glm::vec3, std::vector<Texture*>> {
+            position, {texture, texture, texture, texture, texture, texture}
+        }
+    );
+}
+
 void BlockRenderer::render()
 {
     this->shader->use();
