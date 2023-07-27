@@ -6,5 +6,8 @@
 
 # TODO
 
+- Frustum culling
 - Render a chunk of blocks
-- Think about optimisation (don't render vertices that are can't be seen by a player right now)
+- Place/remove blocks
+- Basic terrain generation
+- Main menu & world saving
