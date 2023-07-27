@@ -16,6 +16,7 @@
 #include "Window/Window.hpp"
 #include "Shader/Shader.hpp"
 #include "Texture/Texture.hpp"
+#include "BlockRenderer/BlockRenderer.hpp"
 #include "callbacks.hpp"
 
 Application::Application(Window* window) : renderer()
@@ -37,29 +38,10 @@ Application::Application(Window* window) : renderer()
     Shader *basic_shader = new Shader("../res/shaders/basic/vertex.glsl",
                                       "../res/shaders/basic/fragment.glsl");
 
-    ModelRenderer *plane = new ModelRenderer(
-        {
-            0.0f, 1.0f, 0.0f,   0.0f, 1.0f,
-            1.0f, 1.0f, 0.0f,   1.0f, 1.0f,
-            0.0f, 0.0f, 0.0f,   0.0f, 0.0f,
-            1.0f, 0.0f, 0.0f,   1.0f, 0.0f
-        },
-        {
-            0, 1, 2,
-            1, 2, 3
-        },
+    BlockRenderer *block = new BlockRenderer(dirt_texture, basic_shader, this->camera);
+    block->add_position(glm::vec3(0.0f, 0.0f, 0.0f));
 
-        dirt_texture,
-        basic_shader,
-        camera
-    );
-    plane->add_position(glm::vec3(0.0f, 0.0f, -2.0f));
-    plane->add_position(glm::vec3(0.0f, 0.0f, 3.0f));
-    plane->add_position(glm::vec3(0.0f, 10.0f, 3.0f));
-    plane->add_position(glm::vec3(-4.0f, -5.0f, 0.0f));
-    plane->add_position(glm::vec3(10.0f, 5.0f, 7.0f));
-
-    this->renderer.add(plane);
+    this->renderer.add(block);
 }
 
 // Delete heap allocated resources here, uninitialize libraries

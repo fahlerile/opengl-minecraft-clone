@@ -16,7 +16,7 @@ public:
     void add_position(glm::vec3 position);
     void render();
 
-private:
+protected:
     std::vector<glm::vec3> positions;
     Model model;
     Texture* texture;

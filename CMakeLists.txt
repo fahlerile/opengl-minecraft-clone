@@ -15,6 +15,7 @@ set(
   src/Shader/Shader.cpp
   src/Camera/Camera.cpp
   src/Texture/Texture.cpp
+  src/BlockRenderer/BlockRenderer.cpp
   src/callbacks.cpp
 )
 
