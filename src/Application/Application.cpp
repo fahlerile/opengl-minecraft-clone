@@ -62,24 +62,28 @@ Application::Application(Window* window) : renderer()
     this->renderer.add(plane);
 }
 
+// Delete heap allocated resources here, uninitialize libraries
 Application::~Application()
 {
     delete this->camera;
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
+    glfwTerminate();
 }
 
+// Initialize GLEW library (OpenGL)
 void Application::initialize_glew()
 {
-    // initialize GLEW
     if (glewInit())
     {
         std::cout << "Failed to initialize GLEW" << std::endl;
         this->quit(2);
     }
+    glEnable(GL_DEPTH_TEST);  // enable Z-buffer
 }
 
+// Initialize imgui library
 void Application::initialize_imgui()
 {
     IMGUI_CHECKVERSION();
@@ -90,11 +94,13 @@ void Application::initialize_imgui()
     ImGui_ImplOpenGL3_Init("#version 330");
 }
 
+// Load necessary resources (e.g textures, sounds, shaders)
 void Application::load_resources()
 {
 
 }
 
+// Starts a main application loop
 void Application::start_loop()
 {
     double this_frame_time = 0;
@@ -127,6 +133,7 @@ void Application::start_loop()
     }
 }
 
+// Handle user input (for toggling some states (e.g debug window state) use callbacks.cpp:keyboard_callback)
 void Application::handle_input()
 {
     if (glfwGetKey(this->window->get_id(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
@@ -146,16 +153,19 @@ void Application::handle_input()
         this->camera->move(Camera::Direction::down, this->delta_time);
 }
 
+// Toggle visibility of a debug window
 void Application::toggle_debug_window()
 {
     this->show_debug_window = !(this->show_debug_window);
 }
 
+// Get a pointer to camera object
 Camera* Application::get_camera()
 {
     return this->camera;
 }
 
+// Quit from application
 void Application::quit(int code)
 {
     glfwTerminate();

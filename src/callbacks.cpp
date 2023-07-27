@@ -4,6 +4,7 @@
 
 #include <iostream>
 
+// Used to control camera angle with mouse
 void cursor_pos_callback(GLFWwindow* window, double x, double y)
 {
     Application* application = (Application*) glfwGetWindowUserPointer(window);
@@ -42,6 +43,7 @@ void cursor_pos_callback(GLFWwindow* window, double x, double y)
     camera->update();
 }
 
+// Used to toggle states (don't use this for things like movement, use Application::handle_input instead)
 void keyboard_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     Application* application = (Application*) glfwGetWindowUserPointer(window);
