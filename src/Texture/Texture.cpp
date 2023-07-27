@@ -32,6 +32,11 @@ Texture::Texture(std::string path)
     stbi_image_free(data);
 }
 
+Texture::~Texture()
+{
+    glDeleteTextures(1, &(this->id));
+}
+
 void Texture::bind(unsigned int unit)
 {
     glActiveTexture(GL_TEXTURE0 + unit);

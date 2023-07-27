@@ -8,8 +8,8 @@ class Shader
 {
     public:
         Shader(std::string vertex_path, std::string fragment_path);
+        ~Shader();
         void use();
-        void delete_shader();
         unsigned int get_uniform_location(const char *name);
     private:
         unsigned int process_shader(std::string path, ShaderType type);

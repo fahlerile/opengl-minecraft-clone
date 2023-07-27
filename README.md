@@ -6,7 +6,6 @@
 
 # TODO
 
-- Add destructors to `Texture` and `Shader` classes
 - Add support to draw different textures on different sides of a block
 - `BlockRenderer` class?
 - Render a chunk of blocks

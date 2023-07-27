@@ -36,6 +36,12 @@ Shader::Shader(std::string vertex_path, std::string fragment_path)
     glDeleteShader(fragment_shader);
 }
 
+// Delete the shader program when this object's lifetime ended
+Shader::~Shader()
+{
+    glDeleteProgram(this->id);
+}
+
 // Process a single shader (read from file and compile). Returns an OpenGL shader ID.
 unsigned int Shader::process_shader(std::string path, ShaderType type)
 {
@@ -90,12 +96,6 @@ unsigned int Shader::process_shader(std::string path, ShaderType type)
 void Shader::use()
 {
     glUseProgram(this->id);
-}
-
-// Delete this shader program
-void Shader::delete_shader()
-{
-    glDeleteProgram(this->id);
 }
 
 // Get location of the uniform of this shader program
