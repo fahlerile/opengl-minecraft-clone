@@ -12,9 +12,12 @@ class Application
 public:
     Application(Window* window);
     ~Application();
+    
     void start_loop();
+
     void toggle_debug_window();
     void toggle_wireframe_mode();
+
     Camera* get_camera();
 
 private:
@@ -26,7 +29,6 @@ private:
 
     Window* window;
     Renderer* renderer;
-    Shader* basic_shader;
     Camera* camera;
 
     std::map<std::string, Texture*> textures;

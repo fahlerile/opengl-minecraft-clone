@@ -6,8 +6,8 @@
 
 # TODO
 
-- Enhance debug window (add plots, remove vec3())
-- Render a chunk of blocks
+- Fix camera teleportation bug (happens randomly)
+- Remove faces that see each other
 - Place/remove blocks
 - Frustum culling
 - Basic terrain generation
