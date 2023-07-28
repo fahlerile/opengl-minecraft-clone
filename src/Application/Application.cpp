@@ -81,6 +81,9 @@ void Application::initialize_glew()
         this->quit(2);
     }
     glEnable(GL_DEPTH_TEST);  // enable Z-buffer
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glFrontFace(GL_CCW);
 }
 
 // Initialize imgui library
