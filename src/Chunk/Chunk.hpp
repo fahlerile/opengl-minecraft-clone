@@ -20,5 +20,5 @@ private:
     std::vector<std::pair<glm::vec3, std::vector<Texture*>>> blocks;
     // std::map<glm::vec3, std::vector<Texture*>> blocks;
     Model model;
-    glm::vec2 position;
+    glm::vec2 position;  // the beginning of this chunk IN WORLD COORDINATES!
 };

@@ -6,6 +6,9 @@
 
 # TODO
 
+- Render blocks with [*instancing*](https://learnopengl.com/Advanced-OpenGL/Instancing) (`Chunk` class)
+    - add instanced array (or uniform array?)
+    - different textures on different sides
 - Remove faces that see each other
 - Place/remove blocks
 - Frustum culling
