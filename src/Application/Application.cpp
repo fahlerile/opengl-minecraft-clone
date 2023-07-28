@@ -39,14 +39,9 @@ Application::Application(Window* window)
     Chunk* p_chunk;
     p_chunk = new Chunk(glm::vec2(0, 0));
     for (int x = 0; x < 16; x++)
-        for (int z = 0; z < 16; z++)
-            p_chunk->add_block(glm::vec3(x, 0, z), this->textures["dirt"]);
-    this->renderer->add_chunk(p_chunk);
-
-    p_chunk = new Chunk(glm::vec2(1, 0));
-    for (int x = 0; x < 16; x++)
-        for (int z = 0; z < 16; z++)
-            p_chunk->add_block(glm::vec3(x, 0, z), this->textures["stone"]);
+        for (int y = 0; y < 16; y++)
+            for (int z = 0; z < 16; z++)
+                p_chunk->add_block(glm::vec3(x, y, z), this->textures["stone"]);
     this->renderer->add_chunk(p_chunk);
 }
 
