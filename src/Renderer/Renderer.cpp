@@ -44,3 +44,8 @@ void Renderer::end(Window* window)
     glfwSwapBuffers(window->get_id());
     glfwPollEvents();
 }
+
+std::vector<Chunk*> Renderer::get_chunk_vector()
+{
+    return this->chunks;
+}

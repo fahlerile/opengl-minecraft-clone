@@ -30,31 +30,35 @@ Application::Application(Window* window)
 
     this->renderer = new Renderer(this->shaders["basic"], this->camera);
 
-    Chunk* test_chunk = new Chunk(glm::vec2(0, 0));
-    for (int x = 0; x < 16; x++)
-        for (int z = 0; z < 16; z++)
-            test_chunk->add_block(glm::vec3(x, 0, z), this->textures["dirt"]);
-
-    Chunk* test_chunk_2 = new Chunk(glm::vec2(1, 0));
-    for (int x = 0; x < 16; x++)
-        for (int z = 0; z < 16; z++)
-            test_chunk_2->add_block(glm::vec3(x, 0, z), this->textures["stone"]);
-
-    this->renderer->add_chunk(test_chunk);
-    this->renderer->add_chunk(test_chunk_2);
-
     glfwSetInputMode(this->window->get_id(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetWindowUserPointer(this->window->get_id(), this);
     glfwSetKeyCallback(this->window->get_id(), keyboard_callback);
     glfwSetCursorPosCallback(this->window->get_id(), cursor_pos_callback);
+
+    Chunk* p_chunk;
+    p_chunk = new Chunk(glm::vec2(0, 0));
+    for (int x = 0; x < 16; x++)
+        for (int z = 0; z < 16; z++)
+            p_chunk->add_block(glm::vec3(x, 0, z), this->textures["dirt"]);
+    this->renderer->add_chunk(p_chunk);
+
+    p_chunk = new Chunk(glm::vec2(1, 0));
+    for (int x = 0; x < 16; x++)
+        for (int z = 0; z < 16; z++)
+            p_chunk->add_block(glm::vec3(x, 0, z), this->textures["stone"]);
+    this->renderer->add_chunk(p_chunk);
 }
 
 // Delete heap allocated resources here, uninitialize libraries
 Application::~Application()
 {
     // free heap allocated resources
+    for (auto p_chunk : this->renderer->get_chunk_vector())
+        delete p_chunk;
+
     delete this->camera;
     delete this->renderer;
+
     for (auto item : this->textures)
         delete item.second;
     for (auto item : this->shaders)

@@ -11,10 +11,14 @@ class Renderer
 public:
     Renderer(Shader* shader,
              Camera* camera);
+
     void add_chunk(Chunk* chunk);
     void render();
+
     void begin();
     void end(Window* window);
+
+    std::vector<Chunk*> get_chunk_vector();
 
 private:
     std::vector<Chunk*> chunks;
