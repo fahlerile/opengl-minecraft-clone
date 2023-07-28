@@ -30,9 +30,18 @@ Application::Application(Window* window)
 
     this->renderer = new Renderer(this->shaders["basic"], this->camera);
 
-    Chunk* test_chunk = new Chunk();
-    test_chunk->add_block(glm::vec3(0.0f, 0.0f, 0.0f), this->textures["stone"]);
+    Chunk* test_chunk = new Chunk(glm::vec2(0, 0));
+    for (int x = 0; x < 16; x++)
+        for (int z = 0; z < 16; z++)
+            test_chunk->add_block(glm::vec3(x, 0, z), this->textures["dirt"]);
+
+    Chunk* test_chunk_2 = new Chunk(glm::vec2(1, 0));
+    for (int x = 0; x < 16; x++)
+        for (int z = 0; z < 16; z++)
+            test_chunk_2->add_block(glm::vec3(x, 0, z), this->textures["stone"]);
+
     this->renderer->add_chunk(test_chunk);
+    this->renderer->add_chunk(test_chunk_2);
 
     glfwSetInputMode(this->window->get_id(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetWindowUserPointer(this->window->get_id(), this);

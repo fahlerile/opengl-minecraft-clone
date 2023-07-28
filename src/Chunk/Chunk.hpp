@@ -10,14 +10,15 @@
 class Chunk
 {
 public:
-    Chunk();
+    Chunk(glm::vec2 position);
 
-    void add_block(glm::vec3 position, std::vector<Texture*> textures);
-    void add_block(glm::vec3 position, Texture* texture);
+    void add_block(glm::vec3 block_position, std::vector<Texture*> textures);
+    void add_block(glm::vec3 block_position, Texture* texture);
     void render(Shader* shader, Camera* camera);
 
 private:
     std::vector<std::pair<glm::vec3, std::vector<Texture*>>> blocks;
     // std::map<glm::vec3, std::vector<Texture*>> blocks;
     Model model;
+    glm::vec2 position;
 };

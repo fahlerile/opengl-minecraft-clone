@@ -6,6 +6,8 @@
 
 # TODO
 
+- Fix memory issues (free chunks in `Application` destructor)
+- Enhance debug window (add plots, remove vec3())
 - Render a chunk of blocks
 - Place/remove blocks
 - Frustum culling

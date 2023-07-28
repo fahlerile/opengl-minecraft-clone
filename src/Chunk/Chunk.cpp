@@ -1,4 +1,5 @@
 #include <vector>
+#include <stdexcept>
 #include <utility>
 
 #define GLEW_STATIC
@@ -11,9 +12,11 @@
 #include "Shader/Shader.hpp"
 #include "Camera/Camera.hpp"
 #include "Chunk.hpp"
+#include "constants.hpp"
 
 // `textures` order is {back, front, left, right, top, bottom}
-Chunk::Chunk() : model(
+// `position` => {x, z} ONLY INTEGER VALUES!!!
+Chunk::Chunk(glm::vec2 position) : model(
     {
         // back side
         1.0f, 1.0f, 0.0f,   1.0f, 1.0f,
@@ -71,22 +74,34 @@ Chunk::Chunk() : model(
         21, 22, 23
     }
 )
-{ }
-
-void Chunk::add_block(glm::vec3 position, std::vector<Texture*> textures)
 {
+    this->position = position * (float) CHUNK_SIZE;
+}
+
+// `position` is relative to this chunk
+void Chunk::add_block(glm::vec3 block_position, std::vector<Texture*> textures)
+{
+    if ((block_position[0] < 0 && block_position[0] >= CHUNK_SIZE) || (block_position[2] < 0 && block_position[2] >= CHUNK_SIZE))
+        throw std::invalid_argument("block position in chunk is more/less than chunk size/0");
+    
     blocks.push_back(
         std::pair<glm::vec3, std::vector<Texture*>> {
-            position, textures
+            glm::vec3(this->position[0] + block_position[0], block_position[1], this->position[1] + block_position[2]),
+            textures
         }
     );
 }
 
-void Chunk::add_block(glm::vec3 position, Texture* texture)
+// `position` is relative to this chunk
+void Chunk::add_block(glm::vec3 block_position, Texture* texture)
 {
+    if ((block_position[0] < 0 && block_position[0] >= CHUNK_SIZE) || (block_position[2] < 0 && block_position[2] >= CHUNK_SIZE))
+        throw std::invalid_argument("block position in chunk is more/less than chunk size/0");
+
     blocks.push_back(
         std::pair<glm::vec3, std::vector<Texture*>> {
-            position, {texture, texture, texture, texture, texture, texture}
+            glm::vec3(this->position[0] + block_position[0], block_position[1], this->position[1] + block_position[2]),
+            {texture, texture, texture, texture, texture, texture}
         }
     );
 }
