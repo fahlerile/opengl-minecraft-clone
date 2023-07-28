@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <filesystem>
 #include <sstream>
-#include <random>
 
 #define GLEW_STATIC
 #include <GL/glew.h>
@@ -17,10 +16,10 @@
 #include "Window/Window.hpp"
 #include "Shader/Shader.hpp"
 #include "Texture/Texture.hpp"
-#include "BlockRenderer/BlockRenderer.hpp"
+#include "Renderer/Renderer.hpp"
 #include "callbacks.hpp"
 
-Application::Application(Window* window) : renderer()
+Application::Application(Window* window)
 {
     this->window = window;
     this->camera = new Camera(glm::vec3(0.0f, 0.0f, 0.0f), 45.0f, 5.0f, this->window);
@@ -28,6 +27,12 @@ Application::Application(Window* window) : renderer()
     this->initialize_glew();
     this->initialize_imgui();
     this->load_resources();
+
+    this->renderer = new Renderer(this->shaders["basic"], this->camera);
+
+    Chunk* test_chunk = new Chunk();
+    test_chunk->add_block(glm::vec3(0.0f, 0.0f, 0.0f), this->textures["stone"]);
+    this->renderer->add_chunk(test_chunk);
 
     glfwSetInputMode(this->window->get_id(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetWindowUserPointer(this->window->get_id(), this);
@@ -40,6 +45,7 @@ Application::~Application()
 {
     // free heap allocated resources
     delete this->camera;
+    delete this->renderer;
     for (auto item : this->textures)
         delete item.second;
     for (auto item : this->shaders)
@@ -95,17 +101,6 @@ void Application::load_resources()
 
         this->shaders[filename] = new Shader((path / "vertex.glsl").string(),
                                              (path / "fragment.glsl").string());
-    }
-
-    this->renderer = new BlockRenderer(this->shaders["basic"], this->camera);
-
-    std::default_random_engine generator;
-    std::uniform_int_distribution<int> binary_distribution(0, 1);
-    std::uniform_int_distribution<int> distribution(0, 20);
-    for (int n = 0; n < 100; n++)
-    {
-        this->renderer->add_block(glm::vec3(distribution(generator), distribution(generator), distribution(generator)),
-                                  binary_distribution(generator) == 0 ? this->textures["dirt"] : this->textures["stone"]);
     }
 }
 

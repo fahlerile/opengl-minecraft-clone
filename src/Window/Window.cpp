@@ -21,7 +21,7 @@ Window::Window(unsigned int width, unsigned int height, const char *title, bool 
         std::exit(3);
     }
     glfwMakeContextCurrent(this->id);
-    glfwSwapInterval(1);
+    glfwSwapInterval(0);
 }
 
 GLFWwindow* Window::get_id()

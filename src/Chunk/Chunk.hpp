@@ -7,20 +7,17 @@
 #include "Camera/Camera.hpp"
 #include "Model/Model.hpp"
 
-class BlockRenderer
+class Chunk
 {
 public:
-    BlockRenderer(Shader* shader,
-                  Camera* camera);
+    Chunk();
+
     void add_block(glm::vec3 position, std::vector<Texture*> textures);
     void add_block(glm::vec3 position, Texture* texture);
-    void render();
-    void begin();
-    void end(Window* window);
+    void render(Shader* shader, Camera* camera);
 
 private:
     std::vector<std::pair<glm::vec3, std::vector<Texture*>>> blocks;
+    // std::map<glm::vec3, std::vector<Texture*>> blocks;
     Model model;
-    Shader* shader;
-    Camera* camera;
 };

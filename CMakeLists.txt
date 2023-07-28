@@ -13,7 +13,8 @@ set(
   src/Shader/Shader.cpp
   src/Camera/Camera.cpp
   src/Texture/Texture.cpp
-  src/BlockRenderer/BlockRenderer.cpp
+  src/Chunk/Chunk.cpp
+  src/Renderer/Renderer.cpp
   src/callbacks.cpp
 )
 

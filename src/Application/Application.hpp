@@ -3,7 +3,8 @@
 #include <string>
 
 #include "Window/Window.hpp"
-#include "BlockRenderer/BlockRenderer.hpp"
+#include "Camera/Camera.hpp"
+#include "Renderer/Renderer.hpp"
 #include "Shader/Shader.hpp"
 
 class Application
@@ -24,7 +25,7 @@ private:
     void quit(int code);
 
     Window* window;
-    BlockRenderer* renderer;
+    Renderer* renderer;
     Shader* basic_shader;
     Camera* camera;
 

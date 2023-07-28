@@ -6,8 +6,8 @@
 
 # TODO
 
-- Frustum culling
 - Render a chunk of blocks
 - Place/remove blocks
+- Frustum culling
 - Basic terrain generation
 - Main menu & world saving
