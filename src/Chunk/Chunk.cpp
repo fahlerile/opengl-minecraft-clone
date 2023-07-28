@@ -11,8 +11,8 @@
 #include "Texture/Texture.hpp"
 #include "Shader/Shader.hpp"
 #include "Camera/Camera.hpp"
+#include "utils/constants.hpp"
 #include "Chunk.hpp"
-#include "constants.hpp"
 
 // `textures` order is {back, front, left, right, top, bottom}
 // `position` => {x, z} ONLY INTEGER VALUES!!!

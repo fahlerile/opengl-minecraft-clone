@@ -17,7 +17,8 @@
 #include "Shader/Shader.hpp"
 #include "Texture/Texture.hpp"
 #include "Renderer/Renderer.hpp"
-#include "callbacks.hpp"
+#include "utils/callbacks.hpp"
+#include "utils/constants.hpp"
 
 Application::Application(Window* window)
 {
@@ -91,12 +92,16 @@ void Application::initialize_imgui()
     ImGui::StyleColorsDark();
     ImGui_ImplGlfw_InitForOpenGL(this->window->get_id(), true);
     ImGui_ImplOpenGL3_Init("#version 330");
+
+    // force not to use imgui.ini
+    io.IniFilename = nullptr;
+    io.LogFilename = nullptr;
 }
 
 // Load necessary resources (e.g textures, sounds, shaders)
 void Application::load_resources()
 {
-    std::filesystem::path textures_path("../res/textures/");
+    std::filesystem::path textures_path(TEXTURES_PATH);
     for (auto entry : std::filesystem::directory_iterator(textures_path))
     {
         std::filesystem::path path = entry.path();
@@ -106,7 +111,7 @@ void Application::load_resources()
         this->textures[filename] = new Texture(path.string());
     }
 
-    std::filesystem::path shaders_path("../res/shaders/");
+    std::filesystem::path shaders_path(SHADERS_PATH);
     for (auto entry : std::filesystem::directory_iterator(shaders_path))
     {
         std::filesystem::path path = entry.path();

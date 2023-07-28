@@ -9,13 +9,13 @@ set(
   src/main.cpp
   src/Application/Application.cpp
   src/Window/Window.cpp
-  src/Model/Model.cpp
-  src/Shader/Shader.cpp
   src/Camera/Camera.cpp
+  src/Shader/Shader.cpp
   src/Texture/Texture.cpp
+  src/Model/Model.cpp
   src/Chunk/Chunk.cpp
   src/Renderer/Renderer.cpp
-  src/callbacks.cpp
+  src/utils/callbacks.cpp
 )
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")  # force .exe to build/bin
@@ -60,4 +60,4 @@ target_link_libraries(
   -static  # dll error if there is no this option (https://stackoverflow.com/questions/69545451/cant-cross-compile-c-files-in-mingw-properly)
 )
 
-file(COPY res DESTINATION bin/res)  # copy resources to bin
+file(COPY res/ DESTINATION bin/res/)  # copy resources to bin
