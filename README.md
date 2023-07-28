@@ -6,7 +6,6 @@
 
 # TODO
 
-- Fix camera teleportation bug (happens randomly)
 - Remove faces that see each other
 - Place/remove blocks
 - Frustum culling

@@ -5,7 +5,7 @@
 Camera::Camera(glm::vec3 position, float fov, float speed, Window* window)
 {
     this->position = position;
-    this->front = glm::vec3(0.0f, 0.0f, -1.0f);
+    this->front = glm::vec3(1.0f, 0.0f, 0.0f);
     this->fov = fov;
     this->speed = speed;
     this->window = window;
